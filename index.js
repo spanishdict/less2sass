@@ -34,11 +34,6 @@ Less2Sass.prototype.convertMixins = function() {
   // Simple form: no semicolons.
   const mixinRegexNoSemicolon = /^(\s*?)\.([\w\-]*?)\s*\(([\s\S][^\;]+?)?\)\s*\{$/gm;
   this.file = this.file.replace(mixinRegexNoSemicolon, '$1@mixin $2($3) {');
-  // With semicolons.
-  const mixinRegexWithSemicolon = /^(\s*?)\.([\w\-]*?)\s*\(([\s\S][^\,]+?)?\)\s*\{$/gm;
-  this.file = this.file.replace(mixinRegexWithSemicolon, function (match, g1, g2, g3) {
-    return g1 + '@mixin ' + g2 + '(' + g3.replace(/;/g, ',') + ') {';
-  });
   return this;
 };
 
