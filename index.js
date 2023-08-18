@@ -15,7 +15,7 @@ Less2Sass.prototype.convert = function(file) {
       .includeMixins()
       .convertExtend()
       .convertColourHelpers()
-      .convertFileExtensions()
+      //.convertFileExtensions()
       .convertFunctionUnit();
 
   return this.file;
@@ -93,9 +93,9 @@ Less2Sass.prototype.convertVariables = function() {
 };
 
 Less2Sass.prototype.convertFileExtensions = function() {
-  var extensionRegex = /\.less/g;
+  var extensionRegex = /styles\.less/g;
 
-  this.file = this.file.replace(extensionRegex, '.scss');
+  this.file = this.file.replace(extensionRegex, 'styles.scss');
 
   return this;
 };
