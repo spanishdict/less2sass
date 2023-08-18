@@ -15,7 +15,7 @@ Less2Sass.prototype.convert = function(file) {
       .includeMixins()
       .convertExtend()
       .convertColourHelpers()
-      //.convertFileExtensions()
+      .convertFileExtensions()
       .convertFunctionUnit();
 
   return this.file;
