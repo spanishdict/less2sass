@@ -43,14 +43,26 @@ function isLessFile(filename) {
   return /\.less$/.test(filename);
 }
 
-function convert(filePath) {
+function convert(filePath, norename, noconvert) {
   info('processing', filePath);
 
   var buffer = fs.readFileSync(filePath);
-  var output = less2sass.convert(buffer.toString());
-  var newPath = filePath.replace(/\.less$/, '.scss');
-
-  write(newPath, output);
+  var output;
+  if (!noconvert) {
+    output = less2sass.convert(buffer.toString());
+  }
+  var newPath = filePath;
+  if (!norename) {
+    newPath = filePath.replace(/\.less$/, '.scss');
+  }
+  if (!norename && !noconvert) {
+    write(newPath, output);
+  } else if (!noconvert && norename) {
+    fs.writeFileSync(filePath, output);
+  } else if (noconvert && !norename) {
+    fs.renameSync(filePath, newPath);
+  }
+  
 }
 
 /**
@@ -89,6 +101,14 @@ if (program.args[0] === undefined) {
 
   program.help();
 }
+
+const norename = (  
+  process.argv.indexOf('-r') > -1 ? true : false
+);
+
+const noconvert = (  
+  process.argv.indexOf('-c') > -1 ? true : false
+);
 
 function read(filePath) {
   var fullPath = path.resolve(process.cwd(), filePath);
