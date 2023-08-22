@@ -116,7 +116,7 @@ function read(filePath) {
   info('scanning', fullPath);
   
   if (isLessFile(fullPath)) {
-    convert(fullPath);
+    convert(fullPath, norename, noconvert);
   }
   else if (stats.isDirectory()){
     var files = fs.readdirSync(fullPath);
